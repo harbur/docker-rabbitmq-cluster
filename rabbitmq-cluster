@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
+chmod 700 /var/lib/rabbitmq/.erlang.cookie
+
+if [ -z "$CLUSTER_WITH" ]; then
+  echo "Running as single server"
+  rabbitmq-server
+else
+  echo "Running as clustered server"
+  /usr/sbin/rabbitmq-server -detached
+  rabbitmqctl stop_app
+
+  echo "Joining cluster $CLUSTER_WITH"
+  rabbitmqctl join_cluster ${ENABLE_RAM:+--ram} rabbit@$CLUSTER_WITH
+
+  rabbitmqctl start_app
+
+  # Tail to keep the a foreground process active..
+  tail -f /var/log/rabbitmq/*
+fi
