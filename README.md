@@ -56,7 +56,7 @@ rabbit3:
 If needed, additional nodes can be added to this file.
 
 Once cluster is up:
-* The management console can be accessed at http://<hostip>:15672
+* The management console can be accessed at `http://hostip:15672`
 * The connection host should look like this: `hostip:5672,hostip:5673,hostip:5674`
 
 # Credits
