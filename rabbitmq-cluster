@@ -3,7 +3,9 @@
 echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
 chmod 700 /var/lib/rabbitmq/.erlang.cookie
 
-if [ -z "$CLUSTER_WITH" ]; then
+hostname=`hostname`
+
+if [ -z "$CLUSTER_WITH" -o "$CLUSTER_WITH" = "$hostname" ]; then
   echo "Running as single server"
   rabbitmq-server
 else
