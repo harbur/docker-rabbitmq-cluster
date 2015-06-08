@@ -4,6 +4,7 @@ echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
 chmod 700 /var/lib/rabbitmq/.erlang.cookie
 
 hostname=`hostname`
+RABBITMQ_NODENAME=${RABBITMQ_NODENAME:-rabbit}
 
 if [ -z "$CLUSTER_WITH" -o "$CLUSTER_WITH" = "$hostname" ]; then
   echo "Running as single server"
@@ -14,7 +15,7 @@ else
   rabbitmqctl stop_app
 
   echo "Joining cluster $CLUSTER_WITH"
-  rabbitmqctl join_cluster ${ENABLE_RAM:+--ram} rabbit@$CLUSTER_WITH
+  rabbitmqctl join_cluster ${ENABLE_RAM:+--ram} $RABBITMQ_NODENAME@$CLUSTER_WITH
 
   rabbitmqctl start_app
 
