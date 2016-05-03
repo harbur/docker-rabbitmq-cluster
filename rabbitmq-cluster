@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo $ERLANG_COOKIE > /var/lib/rabbitmq/.erlang.cookie
-chmod 700 /var/lib/rabbitmq/.erlang.cookie
-
 hostname=`hostname`
 RABBITMQ_NODENAME=${RABBITMQ_NODENAME:-rabbit}
 
