@@ -2,30 +2,20 @@ rabbit1:
   image: harbur/rabbitmq-cluster
   hostname: rabbit1
   environment:
-    - ERLANG_COOKIE=abcdefg
+   - ERLANG_COOKIE=abcdefg
   ports:
-    - "5672:5672"
-    - "15672:15672"
+   - "5672:5672"
+   - "55672:55672"
+  command: /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
 rabbit2:
   image: harbur/rabbitmq-cluster
   hostname: rabbit2
   links:
-    - rabbit1
+   - rabbit1
   environment:
-    - ERLANG_COOKIE=abcdefg
-    - CLUSTER_WITH=rabbit1
-    - ENABLE_RAM=true
+   - ERLANG_COOKIE=abcdefg
+   - CLUSTER_WITH=rabbit1
   ports:
-    - "5673:5672"
-    - "15673:15672"
-rabbit3:
-  image: harbur/rabbitmq-cluster
-  hostname: rabbit3
-  links:
-    - rabbit1
-    - rabbit2
-  environment:
-    - ERLANG_COOKIE=abcdefg
-    - CLUSTER_WITH=rabbit1
-  ports:
-    - "5674:5672"
+   - "5673:5672"
+   - "55672:55672"
+  command: /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
